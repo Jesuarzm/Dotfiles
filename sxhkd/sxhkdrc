@@ -1,236 +1,160 @@
-#
-# Zatiel Independent Hotkeys
-#
+#################################################
+#	███████╗██╗  ██╗██╗  ██╗██╗  ██╗██████╗		#
+#	██╔════╝╚██╗██╔╝██║  ██║██║ ██╔╝██╔══██╗	#
+#	███████╗ ╚███╔╝ ███████║█████╔╝ ██║  ██║	#
+#	╚════██║ ██╔██╗ ██╔══██║██╔═██╗ ██║  ██║	#
+#	███████║██╔╝ ██╗██║  ██║██║  ██╗██████╔╝	#
+#	╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝		#
+####################By: rxyhn####################
 
-# terminal emulator
+##---------- Keybindings for bspwm ----------##
+
+# Terminal (kitty)
 super + Return
-	 kitty
+	kitty
 
-# program launcher
-alt + d
-	rofi -show drun
+# Terminal (floating)
+super + shift + Return
+	bspc rule -a kitty -o state=floating follow=on center=true rectangle=490x310+0+0 && kitty
 
-alt + w
-	brave
+# Open application menu
+super + m
+    sh $HOME/.local/bin/launcher
 
-alt + s
-	code
+# Toggle eww dashboard
+super + d
+    sh $HOME/.local/bin/dashboard
 
-alt + f
-	nemo
-
-alt + m
-	telegram-desktop
-
-alt + r
-	kitty ranger
-
-
-# betterlockscreen -u path/to/directory -r 1920x1080 -b 0.5
-# super + Delete
-# 	betterlockscreen -l blur
-
-super + Delete
-	archlinux-logout
-
-
-#
-# Wallpaper Setter
-#Wallpaper normal
-super + i
-    nitrogen --random --set-scaled --head=0 '/home/jesuar/Imágenes/wallpapers_animes'
-#Wallpaper normal screen 2
+# Toggle notification center
 super + o
-	nitrogen --random --set-zoom-fill --head=1 '/home/jesuar/Imágenes/wallpapers_animes'
-#Wallpaper anime
+    sh $HOME/.local/bin/notificationcenter
+
+# Color Picker
 super + p
-    nitrogen --random --set-scaled --head=0 '/mnt/2TB/.Pics/Wallpaper/'
-    nitrogen --random --set-zoom-fill --head=1 '/mnt/2TB/.Pics/Wallpaper/'
+	sh $HOME/.local/bin/xcolor-pick
 
+# Lockscreen
+ctrl + alt + l
+    betterlockscreen -l
 
-#Scrot
+##---------- Applications ----------##
+
+# Launch Apps
+super + shift + {f,w,e}
+	{thunar,firefox,code}
+
+##---------- System Keys ----------##
+
+# Take a screenshot
 Print
-    scrot '%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'
+	sh $HOME/.local/bin/takeshot --now
+	
+# Take screenshot in 5 second
+alt + Print	
+	sh $HOME/.local/bin/takeshot --in5
 
-super + shift + s
-    scrot -s '%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'
+# Take screenshot in 10 second
+shift + Print	
+	sh $HOME/.local/bin/takeshot --in10
 
+# Take screenshot of active window
+ctrl + Print
+	sh $HOME/.local/bin/takeshot --win
 
-#Raises volume
-XF86AudioRaiseVolume
-    amixer set Master 10%+
+# Take screenshot of area
+ctrl + alt + Print
+	sh $HOME/.local/bin/takeshot --area
 
-#Lowers volume
-XF86AudioLowerVolume
-    amixer set Master 10%-
+# Manage brightness
+XF86MonBrightness{Up,Down}
+    sh $HOME/.local/bin/brightness {up,down}
 
-#Mute
+# Manage Volume
+Manage volume
+XF86Audio{Raise,Lower}Volume
+    sh $HOME/.local/bin/volume {up,down}
+
 XF86AudioMute
-    amixer -D pulse set Master 1+ toggle
+    sh $HOME/.local/bin/volume mute
 
-#PLAY
-XF86AudioPlay
-    playerctl play-pause
+# Music control
+XF86Audio{Next,Prev,Play,Stop}
+	mpc {next,prev,toggle,stop}
 
-#Next
-XF86AudioNext
-    playerctl next
+##---------- Bspwm ----------##
 
-#previous
-XF86AudioPrev
-    playerctl previous
+# Close App
+super + {_,shift + }c
+	bspc node -{c,k}
 
-#Stop
-XF86AudioStop
-    playerctl stop
-
-#Calculadora
-XF86Calculator
-    kcalc
-
-# Balance desktop
-super + b
-	bspc node @focused:/ -B
-
-# make sxhkd reload its configuration files:
+# Reload Keybindings
 super + Escape
 	pkill -USR1 -x sxhkd
 
-#
-# bspwm hotkeys
-#
+# kill window
+ctrl + alt + Escape
+    xkill
 
-# quit/restart bspwm
-super + alt + {q,r}
+# Quit/Restart bspwm
+ctrl + shift + {q,r}
 	bspc {quit,wm -r}
+	
+# Split horizontal, vertical or cancel
+super + {h,v,q}
+	bspc node -p {east,south,cancel}
 
-# close and kill
-super + {_,shift + }z
-	bspc node -{c,k}
-
-# alternate between the tiled and monocle layout
-super + c
-  sh -c "~/.config/bspwm/gaps-monocle.sh"
-
-super + v
-	sh -c "~/.config/bspwm/gaps.sh"
-
-super + m
-	bspc desktop -l next
-
-# hide current node, or restore a queried hidden node
-super + {_,shift} + minus
-	bspc node {,$(bspc query -N -d -n .hidden | head -n 1)} -g hidden
-
-# Focused desktop window gap
-super + alt + {Up,Down}
-	bspc config -d focused window_gap $((`bspc config -d focused window_gap` {-,+} 5 ))
-
-# Focused desktop window gaps scroll
-super + button{4,5}
-	bspc config -d focused window_gap $((`bspc config -d focused window_gap` {-,+} 5 ))
-
-# Global window gaps scroll
-super + alt + button{4,5}
-	bspc config window_gap $(( $(bspc config window_gap) {-,+} 5 ))
-
-# send the newest marked node to the newest preselected node
-# super + y
-	# bspc node newest.marked.local -n newest.!automatic.local
-
-# swap the current node and the biggest node
-super + alt + n
-	bspc node -s biggest
-
-#
-# state/flags
-#
-
-# set the window state
-super + {a,s,d,f}
-	bspc node -t {pseudo_tiled,floating,tiled,fullscreen}
-
-alt + space
-	bspc node -t "~"{floating,tiled}
-
-super + g
-	bspc node -g sticky
-
-# set the node flags
-super + alt + {m,x,z}
-	bspc node -g {marked,locked,private}
-
-#
-# focus/swap
-#
-
-# focus the node in the given direction
-super + {_,shift + }{h,j,k,l}
-	bspc node -{f,s} {west,south,north,east}
-
-# focus the node for the given path jump
-# super + {p,b,comma,period}
-# 	bspc node -f @{parent,brother,first,second}
-
-# focus the next/previous node in the current desktop
-alt + {_,shift + }Tab
-	bspc node -f {next,prev}.local
-
-super + alt + {Left,Right}
-	bspc desktop -f {prev,next}.local
-
-# focus the older or newer node in the focus history
-super + shift + {Left,Right}
-	bspc wm -h off; \
-	bspc node {older,newer} -f; \
-	bspc wm -h on
-
-super + {q,w,e,r,t}
-	bspc desktop -f '^{6-9,10}'
-
-# focus or send to the given desktop
-super + {_,alt + }{1-9,0}
-	bspc {desktop -f,node -d} '^{1-9,10}'
-
-super + ctrl + {Right,Left}
-	bspc node -d {next,prev} -f
-
-# focus the last node/desktop
-super + {grave,Tab}
-	bspc {node,desktop} -f last
-
-#
-# preselect
-#
-
-# preselect the direction
-super + ctrl + {h,j,k,l}
-	bspc node -p {west,south,north,east}
-
-# preselect the ratio
+# Preselect the ratio
 super + ctrl + {1-9}
 	bspc node -o 0.{1-9}
 
-# cancel the preselection for the focused node
-ctrl + alt + space
-	bspc node -p cancel
+# Fullscreen or Monocle
+super + f
+#	bspc desktop -l next
+    bspc node -t "~"fullscreen
 
-# cancel the preselection for the focused desktop
-super + ctrl + shift + space
-	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+# Toggle beetwen floating & tiled
+super + space
+    bspc node -t "~"{floating,tiled}
 
-#
-# move/resize
-#
+# Pseudo Tiled & tiled mode
+super + shift + space
+#super + {p,t}
+    bspc node -t "~"{pseudo_tiled,tiled}
 
-# expand a window by moving one of its side outward
-super + alt + {h,j,k,l}
-	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+# Set the node flags
+super + ctrl + {m,x,y,z}
+	bspc node -g {marked,locked,sticky,private}
 
-# contract a window by moving one of its side inward
-super + alt + shift + {h,j,k,l}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+# Send the window to another edge of the screen
+super + {_,shift + }{Left,Down,Up,Right}
+	bspc node -{f,s} {west,south,north,east}
 
-# move a floating window
-super + {Left,Down,Up,Right}
-	bspc node -v {-20 0,0 20,0 -20,20 0}
+# Change focus to next window, including floating window
+alt + {_,shift + }Tab
+	bspc node -f {next.local,prev.local}
+
+# Switch workspace
+ctrl + alt + {Left,Right}
+	bspc desktop -f {prev.local,next.local}
+
+# Switch to last opened workspace
+super + {Tab,grave}
+	bspc {node,desktop} -f last
+
+# Send focused window to another workspace
+super + {_,shift + }{1-8}
+	bspc {desktop -f,node -d} '^{1-8}'
+
+# Expanding windows
+super + control + {Left,Right,Up,Down}
+	bspc node -z {left -20 0,right 20 0,top 0 -20,bottom 0 20}
+	
+## Shrinking windows
+super + alt + {Left,Right,Up,Down}
+	bspc node -z {left 20 0,right -20 0,top 0 20,bottom 0 -20}
+	
+## Move floating windows
+alt + shift + {Left,Down,Up,Right}
+	bspc node -v {-20 0,0 20,0 -20,20 0}	
+
+##---------- EOF ----------##
