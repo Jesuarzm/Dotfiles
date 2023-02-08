@@ -83,7 +83,7 @@ xfce4-power-manager &
 bspfloat &
 
 # Start X wallpaper.
-feh --no-fehbg --bg-fill $HOME/Pictures/Wallpapers/bg.png
+nitrogen --restore
 
 
 # Fix cursor.
@@ -93,13 +93,14 @@ xsetroot -cursor_name left_ptr
 # #                                 WINDOW RULES                               #
 # ##############################################################################
 
-bspc monitor -d 1 2 3 4 5 6  
+bspc monitor HDMI-0 -d I II III IV V
+bspc monitor DVI-D-0 -d VI VII VIII IX X 
 
 rule -a kitty                       follow=on focus=on
 rule -a Code                        follow=on focus=on
-rule -a firefox                     follow=on focus=on
+rule -a brave                       follow=on focus=on
 rule mpv                            state=floating
-rule feh                            state=floating
+rule eog                            state=floating
 
 # ##############################################################################
 # #                            GENERAL CONFIGURATION                           #

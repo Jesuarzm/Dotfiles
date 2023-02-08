@@ -41,7 +41,7 @@ ctrl + alt + l
 
 # Launch Apps
 super + shift + {f,w,e}
-	{thunar,firefox,code}
+	{nemo,brave,code}
 
 ##---------- System Keys ----------##
 
