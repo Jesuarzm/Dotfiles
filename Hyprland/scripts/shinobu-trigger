@@ -1,0 +1,8 @@
+#!/bin/bash
+# Si Shinobu está corriendo, envía señal de escucha
+if pgrep -f "shinobu.py" > /dev/null; then
+    pkill -USR1 -f "shinobu.py"
+else
+    # Si no está corriendo, ábrela en una terminal
+    kitty -e shinobu &
+fi

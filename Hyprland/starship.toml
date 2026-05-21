@@ -1,0 +1,26 @@
+add_newline = true
+
+format = """
+[╭─](bold #7aa2f7)$directory$git_branch$git_status$cmd_duration
+[╰─](bold #7aa2f7)$character
+"""
+
+[directory]
+style = "bold #7aa2f7"
+truncation_length = 3
+truncate_to_repo = false
+
+[character]
+success_symbol = "[❯](bold #9ece6a)"
+error_symbol = "[❯](bold #f7768e)"
+
+[git_branch]
+symbol = " "
+style = "bold #bb9af7"
+
+[git_status]
+style = "bold #e0af68"
+
+[cmd_duration]
+min_time = 1000
+format = " [$duration](bold #565f89)"

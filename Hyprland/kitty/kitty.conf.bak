@@ -1,0 +1,74 @@
+# #######################################################################################
+# KITTY CONFIG - TokyoNight Storm / Hyprland / Noctalia
+# #######################################################################################
+
+# Tema
+include /usr/share/tokyonight-extra/kitty/tokyonight_storm.conf
+
+# Fuente
+font_family      JetBrainsMono Nerd Font
+bold_font        auto
+italic_font      auto
+bold_italic_font auto
+
+font_size 11.5
+
+# Cursor
+cursor_shape beam
+cursor_blink_interval 0.5
+cursor_stop_blinking_after 15.0
+
+# Ventana
+initial_window_width 1000
+initial_window_height 620
+remember_window_size no
+
+window_padding_width 8
+background_opacity 0.96
+dynamic_background_opacity yes
+
+# Bordes internos / estética
+hide_window_decorations no
+confirm_os_window_close 0
+
+# Scrollback
+scrollback_lines 10000
+wheel_scroll_multiplier 3.0
+
+# Mouse
+copy_on_select clipboard
+strip_trailing_spaces smart
+
+# URLs
+detect_urls yes
+url_style curly
+open_url_with default
+
+# Tabs
+tab_bar_edge bottom
+tab_bar_style powerline
+tab_powerline_style slanted
+tab_title_template "{title}"
+
+# Shell
+shell zsh
+
+# Rendimiento
+sync_to_monitor yes
+repaint_delay 10
+input_delay 3
+
+# Atajos útiles
+map ctrl+shift+c copy_to_clipboard
+map ctrl+shift+v paste_from_clipboard
+map ctrl+shift+enter new_window
+map ctrl+shift+t new_tab
+map ctrl+shift+w close_tab
+map ctrl+shift+right next_tab
+map ctrl+shift+left previous_tab
+map ctrl+shift+plus change_font_size all +1.0
+map ctrl+shift+minus change_font_size all -1.0
+map ctrl+shift+backspace change_font_size all 0
+
+# Abrir URL bajo cursor
+map ctrl+shift+u open_url

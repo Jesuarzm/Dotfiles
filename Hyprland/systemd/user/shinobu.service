@@ -1,0 +1,14 @@
+[Unit]
+Description=Shinobu AI Assistant
+After=graphical-session.target
+
+[Service]
+ExecStart=/home/jesuar/.local/share/jarvis/venv/bin/python /home/jesuar/.local/bin/shinobu.py
+Restart=on-failure
+Environment=DISPLAY=:1
+Environment=WAYLAND_DISPLAY=wayland-1
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+Environment=PATH=/home/jesuar/.local/bin:/home/jesuar/.local/share/pipx/venvs/openai-whisper/bin:/usr/bin:/bin
+
+[Install]
+WantedBy=graphical-session.target
